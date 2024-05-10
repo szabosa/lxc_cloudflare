@@ -21,7 +21,7 @@ echo -e "Loading..."
 APP="Cloudflared"
 var_disk="1"
 var_cpu="1"
-var_ram="128"
+var_ram="64"
 var_os="debian"
 var_version="12"
 variables
