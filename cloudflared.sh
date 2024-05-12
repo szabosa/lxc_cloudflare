@@ -1,28 +1,29 @@
-#!/usr/bin/env sh
-
+#!/usr/bin/env bash
+source <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
 # Copyright (c) 2021-2024 tteck
 # Author: tteck (tteckster)
 # License: MIT
 # https://github.com/tteck/Proxmox/raw/main/LICENSE
 
-header_info() {
-    cat << "EOF"
+function header_info {
+clear
+cat <<"EOF"
    ________                ________                    __
   / ____/ /___  __  ______/ / __/ /___ _________  ____/ /
- / /   / / __ \/ / / / __  / /_/ / __ `/ ___/ _ \/ __  /
-/ /___/ / /_/ / /_/ / /_/ / __/ / /_/ / /  /  __/ /_/ /
-\____/_/\____/\__,_/\__,_/_/ /_/\__,_/_/   \___/\__,_/
+ / /   / / __ \/ / / / __  / /_/ / __ `/ ___/ _ \/ __  / 
+/ /___/ / /_/ / /_/ / /_/ / __/ / /_/ / /  /  __/ /_/ /  
+\____/_/\____/\__,_/\__,_/_/ /_/\__,_/_/   \___/\__,_/   
+                                                         
 EOF
 }
-
 header_info
-echo "Loading..."
+echo -e "Loading..."
 APP="Cloudflared"
-var_disk="1G"
+var_disk="1"
 var_cpu="1"
-var_ram="128"
-var_os="debian"
-var_version="12"
+var_ram="64"
+var_os="alpine"
+var_version="3"
 variables
 color
 catch_errors
@@ -30,7 +31,7 @@ catch_errors
 function default_settings() {
   CT_TYPE="1"
   PW=""
-  CT_ID=100132
+  CT_ID=$NEXTID
   HN=$NSAPP
   DISK_SIZE="$var_disk"
   CORE_COUNT="$var_cpu"
@@ -51,17 +52,14 @@ function default_settings() {
   echo_default
 }
 
-update_script() {
-  header_info
-  if [ ! -d /var ]; then
-    msg_error "No ${APP} Installation Found!"
-    exit 1
-  fi
-  msg_info "Updating $APP LXC"
-  apk update >/dev/null
-  apk upgrade --available >/dev/null
-  msg_ok "Updated $APP LXC"
-  exit 0
+function update_script() {
+header_info
+if [[ ! -d /var ]]; then msg_error "No ${APP} Installation Found!"; exit; fi
+msg_info "Updating $APP LXC"
+apk update > /dev/null
+apk upgrade --no-cache > /dev/null
+msg_ok "Updated $APP LXC"
+exit
 }
 
 start
