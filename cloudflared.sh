@@ -20,13 +20,15 @@ echo "Loading..."
 APP="Cloudflared"
 var_disk="1G"
 var_cpu="1"
-var_ram="64M"
-var_os="alpine"
-var_version="3"
-. <(curl -s https://raw.githubusercontent.com/tteck/Proxmox/main/misc/build.func)
+var_ram="128"
+var_os="debian"
+var_version="12"
+variables
+color
+catch_errors
 
-default_settings() {
-  CT_TYPE="lxc"
+function default_settings() {
+  CT_TYPE="1"
   PW=""
   CT_ID=100132
   HN=$NSAPP
