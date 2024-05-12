@@ -22,8 +22,8 @@ APP="Cloudflared"
 var_disk="1"
 var_cpu="1"
 var_ram="64"
-var_os="debian"
-var_version="12"
+var_os="alpine"
+var_version="3.9.11"
 variables
 color
 catch_errors
@@ -31,7 +31,7 @@ catch_errors
 function default_settings() {
   CT_TYPE="1"
   PW=""
-  CT_ID=100131
+  CT_ID=100132
   HN=$NSAPP
   DISK_SIZE="$var_disk"
   CORE_COUNT="$var_cpu"
